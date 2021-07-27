@@ -45,6 +45,48 @@ const API_ROUTES = asRouteTree({
       debugContext: t.optional(t.string),
     },
   },
+  submitPullRequests: {
+    method: "POST",
+    url: "/graphite/submit/pull-requests",
+    params: {
+      authToken: t.string,
+      repoOwner: t.string,
+      repoName: t.string,
+      prs: t.array(
+        t.unionMany([
+          t.shape({
+            action: t.literals(["create"] as const),
+            head: t.string,
+            base: t.string,
+            title: t.string,
+          }),
+          t.shape({
+            action: t.literals(["update"] as const),
+            head: t.string,
+            base: t.string,
+            prNumber: t.number,
+          }),
+        ])
+      ),
+    },
+    response: {
+      prs: t.array(
+        t.unionMany([
+          t.shape({
+            head: t.string,
+            prNumber: t.number,
+            prURL: t.string,
+            status: t.literals(["updated", "created"] as const),
+          }),
+          t.shape({
+            head: t.string,
+            error: t.string,
+            status: t.literals(["error"] as const),
+          }),
+        ])
+      ),
+    },
+  },
 } as const);
 
 export default API_ROUTES;
