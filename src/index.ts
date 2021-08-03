@@ -45,6 +45,14 @@ const API_ROUTES = asRouteTree({
       debugContext: t.optional(t.string),
     },
   },
+  traces: {
+    method: "POST",
+    url: "/graphite/traces",
+    params: {
+      jsonTraces: t.string,
+      cliVersion: t.string,
+    },
+  },
   submitPullRequests: {
     method: "POST",
     url: "/graphite/submit/pull-requests",
