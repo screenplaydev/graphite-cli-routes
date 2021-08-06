@@ -7,9 +7,12 @@ const API_ROUTES = asRouteTree({
     url: "/graphite/log-command",
     params: {
       commandName: t.string,
+      // Yes, I am aware this is a typo, but we need to leave it for backcompat
       durationMiliSeconds: t.number,
+      // email via git
       user: t.string,
       version: t.optional(t.string),
+      auth: t.optional(t.string),
       err: t.optional(
         t.shape({
           name: t.string,
