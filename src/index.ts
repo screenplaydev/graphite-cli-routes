@@ -71,6 +71,7 @@ const API_ROUTES = asRouteTree({
             base: t.string,
             title: t.string,
             body: t.optional(t.string),
+            draft: t.optional(t.boolean),
           }),
           t.shape({
             action: t.literals(["update"] as const),
