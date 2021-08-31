@@ -100,6 +100,38 @@ const API_ROUTES = asRouteTree({
       ),
     },
   },
+  pullRequestInfo: {
+    // This operation is idempotent - but we're making it a POST to hack around
+    // the need to supply an array of PR numbers (which would otherwise need
+    // to be serialized and de-serialized in a GET request).
+    method: "POST",
+    url: "/graphite/pull-requests",
+    params: {
+      authToken: t.string,
+      repoOwner: t.string,
+      repoName: t.string,
+      prNumbers: t.array(t.number),
+    },
+    response: {
+      prs: t.array(
+        t.shape({
+          prNumber: t.number,
+          title: t.string,
+          state: t.literals(["OPEN", "CLOSED", "MERGED"] as const),
+          reviewDecision: t.literals([
+            "CHANGES_REQUESTED",
+            "APPROVED",
+            "REVIEW_REQUIRED",
+            null,
+            undefined,
+          ] as const),
+          baseRefName: t.string,
+          url: t.string,
+          isDraft: t.boolean,
+        })
+      ),
+    },
+  },
 } as const);
 
 export default API_ROUTES;
