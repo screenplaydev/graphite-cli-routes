@@ -46,7 +46,6 @@ const API_ROUTES = asRouteTree({
       user: t.string,
       message: t.string,
       debugContext: t.optional(t.string),
-      state: t.optional(t.string),
     },
   },
   traces: {
