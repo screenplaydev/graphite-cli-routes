@@ -125,6 +125,7 @@ const API_ROUTES = asRouteTree({
             null,
             undefined,
           ] as const),
+          headRefName: t.string,
           baseRefName: t.string,
           url: t.string,
           isDraft: t.boolean,
