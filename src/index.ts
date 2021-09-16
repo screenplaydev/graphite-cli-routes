@@ -111,6 +111,7 @@ const API_ROUTES = asRouteTree({
       repoOwner: t.string,
       repoName: t.string,
       prNumbers: t.array(t.number),
+      prHeadRefNames: t.optional(t.array(t.string))
     },
     response: {
       prs: t.array(
