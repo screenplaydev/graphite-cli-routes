@@ -134,14 +134,33 @@ const API_ROUTES = asRouteTree({
       ),
     },
   },
-  shouldShowCLISurvey: {
+  cliSurvey: {
     method: "GET",
-    url: "/graphite/cli-survey/should-survey",
+    url: "/graphite/cli-survey/survey",
     queryParams: {
       authToken: t.string,
     },
     response: {
-      shouldSurvey: t.boolean,
+      survey: t.unionMany([
+        t.undefinedtype,
+        t.shape({
+          introMessage: t.unionMany([t.string, t.undefinedtype]),
+          questions: t.array(
+            t.unionMany([
+              t.shape({
+                type: t.literal("TEXT" as const),
+                question: t.string,
+              }),
+              t.shape({
+                type: t.literal("OPTIONS" as const),
+                question: t.string,
+                options: t.array(t.string),
+              }),
+            ])
+          ),
+          completionMessage: t.unionMany([t.string, t.undefinedtype]),
+        }),
+      ]),
     },
   },
   surveyResponse: {
