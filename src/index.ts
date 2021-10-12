@@ -111,7 +111,7 @@ const API_ROUTES = asRouteTree({
       repoOwner: t.string,
       repoName: t.string,
       prNumbers: t.array(t.number),
-      prHeadRefNames: t.optional(t.array(t.string))
+      prHeadRefNames: t.optional(t.array(t.string)),
     },
     response: {
       prs: t.array(
@@ -132,6 +132,31 @@ const API_ROUTES = asRouteTree({
           isDraft: t.boolean,
         })
       ),
+    },
+  },
+  shouldShowCLISurvey: {
+    method: "GET",
+    url: "/graphite/cli-survey/should-survey",
+    queryParams: {
+      authToken: t.string,
+    },
+    response: {
+      shouldSurvey: t.boolean,
+    },
+  },
+  surveyResponse: {
+    method: "POST",
+    url: "/graphite/cli-survey/responses",
+    params: {
+      authToken: t.string,
+      responses: t.shape({
+        timestamp: t.number,
+        responses: t.array(t.shape({ question: t.string, response: t.string })),
+        exitedEarly: t.boolean,
+      }),
+    },
+    response: {
+      lastSurveyedTime: t.number,
     },
   },
 } as const);
